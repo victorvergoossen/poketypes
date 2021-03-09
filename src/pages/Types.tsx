@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getPokeTypes } from '../gateways/api-gateway';
 import { ApiTypes } from './Types.types';
 import DamageRelations from '../components/DamageRelations';
