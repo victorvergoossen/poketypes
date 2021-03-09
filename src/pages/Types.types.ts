@@ -1,6 +1,6 @@
 export interface ApiTypes {
   data: {
-    damage_relations?: {
+    damage_relations: {
       double_damage_to: {
         name: string;
       }[];

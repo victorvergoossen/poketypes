@@ -74,7 +74,6 @@ const Types = () => {
         setLoading(false);
         animateIn();
       })
-      .catch(err => console.error(err));
   }, [type]);
 
   useEffect(() => {

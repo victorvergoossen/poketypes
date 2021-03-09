@@ -10,8 +10,8 @@ export const DamageRelations = (props: {
   const { variant, type, data } = props;
 
   const texts = {
-    'double_damage_from': `${type.toUpperCase()} Is super effective against::`,
-    'double_damage_to': `${type.toUpperCase()} gets severely hurt by:`,
+    'double_damage_from': `${type.toUpperCase()} gets severely hurt by:`,
+    'double_damage_to': `${type.toUpperCase()} Is super effective against:`,
     'half_damage_from': `These don't hurt ${type.toUpperCase()} much:`,
     'half_damage_to': `${type.toUpperCase()} is not very effective on:`,
   };

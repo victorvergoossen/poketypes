@@ -2,6 +2,13 @@
 coverage/
 dist/*
 !dist/index.html
+!dist/android-chrome-192x192.png
+!dist/android-chrome-512x512.png
+!dist/apple-touch-icon.png
+!dist/favicon-16x16.png
+!dist/favicon-32x32.png
+!dist/favicon.ico
+!dist/site.webmanifest
 node_modules/
 *.log
 
