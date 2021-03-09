@@ -2,6 +2,8 @@
 
 This project uses PokeApi (https://pokeapi.co/) to generate an interactive overview for checking the weaknesses and strengths of Pokemon types. 
 
+A build can be found here: https://poke-types.netlify.app/
+
 ## Building and running on localhost
 
 First install dependencies:
