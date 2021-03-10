@@ -5,6 +5,7 @@ import DamageRelations from '../components/DamageRelations';
 import Loader from '../components/Loader';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
+import SearchType from "./SearchType";
 
 const pokeTypes = [
   'bug',
@@ -82,7 +83,9 @@ const Types = () => {
 
   return (
     <div className="min-h-screen grid grid-cols-12 w-full h-full bg-gray-900 text-white">
-      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-12 mb-12 mx-auto w-full">
+      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-24 mb-12 mx-auto w-full">
+        <SearchType doType={doType} />
+
         <p className="mb-2 mx-auto w-full">
           Please select a type:
         </p>
