@@ -19,10 +19,10 @@ type Pokemon = {
   }
 }
 
-const SearchType = ({ doType }: { doType: (newType: string) => void }) => {
+const SearchType = ({ doType }: { doType: (newType: string, newName?: string | undefined) => void }) => {
   const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [data, setData] = useState<any>(null);
-  const [showList, setShowList] = useState<boolean>(true);
+  const [showList, setShowList] = useState<boolean>(false);
   const [activePokemon, setActivePokemon] = useState<PokemonList[]>([]);
 
   const theme = createMuiTheme({
@@ -47,10 +47,10 @@ const SearchType = ({ doType }: { doType: (newType: string) => void }) => {
     getData();
   }, []);
 
-  const selectPokemon = (name: string | undefined) => {
-    if (!name) return;
+  const selectPokemon = (name: string | undefined, type: string | undefined) => {
+    if (!type) return;
     setShowList(false);
-    doType(name);
+    doType(type, name);
   };
 
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {
@@ -95,9 +95,15 @@ const SearchType = ({ doType }: { doType: (newType: string) => void }) => {
         <TextField onChange={onChange} className="w-full" id="outlined-basic" label="Search Pokémon" variant="outlined" />
       </MuiThemeProvider>
       <div className="grid grid-cols-2 gap-2 bg-gray-900 shadow-lg p-4">
+        {showList && activePokemon.length < 1 && (
+          <div className="relative h-48 w-full p-4 bg-gray-800 col-span-2">
+            <span className="block font-dot absolute inset-0 w-full h-4 m-auto text-center capitalize">No matches</span>
+          </div>
+        )}
+
         {showList && activePokemon.map((pokemon: PokemonList, i: number) => (
           <button
-            onClick={() => selectPokemon(pokemon.type)}
+            onClick={() => selectPokemon(pokemon.name, pokemon.type)}
             key={`pokemon_search_${i}`}
             className={`relative p-4 bg-gray-800 hover:bg-gray-700 transition-colors duration-200 col-span-1 ${isEven(i) ? '' : 'col-start-2'}`}
           >
