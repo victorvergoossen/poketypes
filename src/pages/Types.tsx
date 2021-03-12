@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getPokeTypes } from '../gateways/api-gateway';
-import { ApiTypes } from './Types.types';
+import { DamageTypes } from './Types.types';
 import DamageRelations from '../components/DamageRelations';
 import Loader from '../components/Loader';
 import { Box, Button } from '@material-ui/core';
@@ -32,7 +32,7 @@ const Types = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
   const [name, setName] = useState('');
-  const [data, setData] = useState<ApiTypes | null>(null);
+  const [data, setData] = useState<DamageTypes | null>(null);
   const buttons = useRef<HTMLButtonElement[]>([]);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -90,7 +90,7 @@ const Types = () => {
 
   return (
     <div className="grid grid-cols-12 w-full h-full bg-gray-900 text-white">
-      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-24 mb-14 mx-auto w-full">
+      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-28 mb-14 mx-auto w-full">
         <SearchType doType={doType} />
 
         <p className="mb-2 mx-auto w-full">
@@ -111,7 +111,7 @@ const Types = () => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-4 mt-8 mb-12 mx-auto w-full">
+      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-4 mt-12 mb-12 mx-auto w-full">
           {loading
             ? <Loader />
             : (

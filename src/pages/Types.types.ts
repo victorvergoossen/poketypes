@@ -1,4 +1,4 @@
-export interface ApiTypes {
+export interface DamageTypes {
   data: {
     damage_relations: {
       double_damage_to: {
