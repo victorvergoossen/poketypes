@@ -1,11 +1,11 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getPokeTypes } from '../gateways/api-gateway';
-import { ApiTypes } from './Types.types';
+import { DamageTypes } from './Types.types';
 import DamageRelations from '../components/DamageRelations';
 import Loader from '../components/Loader';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
+import SearchType from '../components/SearchType';
 
 const pokeTypes = [
   'bug',
@@ -31,7 +31,8 @@ const pokeTypes = [
 const Types = () => {
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState('');
-  const [data, setData] = useState<ApiTypes | null>(null);
+  const [name, setName] = useState('');
+  const [data, setData] = useState<DamageTypes | null>(null);
   const buttons = useRef<HTMLButtonElement[]>([]);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,21 +47,30 @@ const Types = () => {
     });
   };
 
-  const doType = (newType: string) => {
-    setLoading(true);
+  const getType = (newType: string, newName?: string) => {
     if (!contentRef.current) return;
+    setLoading(true);
+
+    if (!newName) {
+      setName('')
+    } else if (newName !== name) {
+      setName(newName);
+    }
 
     gsap
       .to(contentRef.current, { opacity: 0, duration: 0.15, ease: 'power2.inOut' })
       .then(() => {
-        buttons.current.forEach((btn) => {
-          if (btn.classList.contains('active')) {
-            btn.classList.remove('active');
-          } else if (btn.innerText.toLowerCase() === newType) {
-            btn.classList.add('active');
-          }
-        });
+        if (newType !== type) {
+          buttons.current.forEach((btn) => {
+            if (btn.classList.contains('active')) {
+              btn.classList.remove('active');
+            } else if (btn.innerText.toLowerCase() === newType) {
+              btn.classList.add('active');
+            }
+          });
+        }
 
+        setType('') // First reset type so same type as before also triggers useEffect
         setType(newType);
       });
   };
@@ -82,17 +92,19 @@ const Types = () => {
   }, []);
 
   return (
-    <div className="min-h-screen grid grid-cols-12 w-full h-full bg-gray-900 text-white">
-      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-12 mb-12 mx-auto w-full">
+    <div className="grid grid-cols-12 w-full h-full bg-gray-900 text-white">
+      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-28 mb-14 mx-auto w-full">
+        <SearchType getType={getType} />
+
         <p className="mb-2 mx-auto w-full">
-          Please select a type:
+          Or select a type:
         </p>
 
         <div className="grid grid-cols-12 lg:gap-x-8 gap-x-2 gap-y-2">
           {pokeTypes && pokeTypes.map((res, i) => (
             <Button
               key={`type_${i}`}
-              onClick={() => doType(res)}
+              onClick={() => getType(res)}
               variant="contained"
               className={`type-button button capitalize ${res}`}
             >
@@ -102,13 +114,18 @@ const Types = () => {
         </div>
       </div>
 
-      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-4 mt-8 mb-12 mx-auto w-full">
+      <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-4 mt-12 mb-12 mx-auto w-full">
           {loading
             ? <Loader />
             : (
               <div id="anchor" ref={contentRef} className="opacity-0">
                 {type && (
                   <>
+                    {name && (
+                      <h2 className="font-dot text-xl text-center mb-6">
+                        Selected Pokémon: <strong className="uppercase">{name}</strong>
+                      </h2>
+                    )}
                     <Box className={`w-auto capitalize bg-gray-800 pt-3 pb-4 rounded max-w-sm font-dot mx-auto border-4 border-white ${type}`}>
                       <h1 className="text-3xl font-bold text-center">
                         {type}

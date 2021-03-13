@@ -1,12 +1,14 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { ApiTypes } from '../pages/Types.types';
+import { DamageTypes } from '../pages/Types.types';
 
-export const DamageRelations = (props: {
-  variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to',
-  type: string,
-  data: ApiTypes | null
-}) => {
+interface DamageRelationsProps {
+  variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to';
+  type: string;
+  data: DamageTypes | null;
+}
+
+export const DamageRelations = (props: DamageRelationsProps) => {
   const { variant, type, data } = props;
 
   const texts = {
@@ -31,7 +33,7 @@ export const DamageRelations = (props: {
       <ul>
         {data?.data?.['damage_relations']?.[variant] && data?.data?.['damage_relations']?.[variant].length > 0 ? (
           <>
-            {data?.data?.['damage_relations']?.[variant]?.map((res, i) => (
+            {data?.data?.['damage_relations']?.[variant]?.map((res, i: number) => (
               <li
                 key={`half_damage_from_${i}`}
                 className={`block text-center text-sm w-full px-4 py-1 my-1 
