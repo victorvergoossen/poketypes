@@ -1,18 +1,20 @@
 export interface DamageTypes {
   data: {
     damage_relations: {
-      double_damage_to: {
-        name: string;
-      }[];
-      double_damage_from: {
-        name: string;
-      }[];
-      half_damage_from: {
-        name: string;
-      }[];
-      half_damage_to: {
+      [key: string]: {
         name: string;
       }[];
     };
   };
 }
+
+export interface PokemonDetails {
+  data: {
+    damage_relations: {
+      [key: string]: {
+        name: string;
+      }[];
+    };
+  };
+}
+

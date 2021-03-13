@@ -38,6 +38,7 @@ html, body {
 }
 
 .active {
+  pointer-events: none;
   border: .2rem solid #fff !important;
 }
 

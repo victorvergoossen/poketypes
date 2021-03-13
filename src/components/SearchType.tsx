@@ -1,26 +1,13 @@
-import React, {ChangeEvent, useEffect, useRef, useState} from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Loader from './Loader';
 import { getPokemon, getPokemons } from '../gateways/api-gateway';
 import { debounce, MuiThemeProvider, TextField } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core';
+import { PokemonList, Pokemon, SearchTypeProps } from './SearchType.types';
 
-type PokemonList = {
-  name: string,
-  url: string;
-  sprite?: string;
-  type?: string;
-}
+const SearchType = ({ getType }: SearchTypeProps) => {
+  const charactersUntilApiCall = 2;
 
-type Pokemon = {
-  data: {
-    sprites: {
-      'front_default': string;
-    };
-    types: any;
-  }
-}
-
-const SearchType = ({ doType }: { doType: (newType: string, newName?: string | undefined) => void }) => {
   const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [data, setData] = useState<any>(null);
   const [showList, setShowList] = useState<boolean>(false);
@@ -52,7 +39,7 @@ const SearchType = ({ doType }: { doType: (newType: string, newName?: string | u
   const selectPokemon = (name: string | undefined, type: string | undefined) => {
     if (!type) return;
     setShowList(false);
-    doType(type, name);
+    getType(type, name);
   };
 
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {
@@ -83,11 +70,10 @@ const SearchType = ({ doType }: { doType: (newType: string, newName?: string | u
     setSearching(true);
 
     timeOut.current = setTimeout(() => {
-      if (event?.target?.value?.length > 2) {
+      if (event?.target?.value?.length > charactersUntilApiCall) {
         setActivePokemon([]);
         setShowList(true);
-        const value = event.target.value.toLowerCase();
-        filterData(value);
+        filterData(event.target.value.toLowerCase());
       } else {
         setShowList(false);
       }
@@ -120,7 +106,8 @@ const SearchType = ({ doType }: { doType: (newType: string, newName?: string | u
               key={`pokemon_search_${i}`}
               className={`relative p-4 bg-gray-800 hover:bg-gray-700 transition-colors duration-200 col-span-1 ${isEven(i) ? '' : 'col-start-2'}`}
             >
-              {pokemon.sprite && <img src={pokemon.sprite} className="h-48 w-48 pb-6 pt-6 mx-auto object-contain" alt={pokemon.name} />}
+              {pokemon.sprite &&
+              <img src={pokemon.sprite} className="h-48 w-48 pb-6 pt-6 mx-auto object-contain" alt={pokemon.name} />}
 
               <span className="block font-dot absolute right-0 bottom-0 left-0 text-center mb-16 capitalize">{pokemon.name}</span>
               <span className={`block ${pokemon.type} rounded border border-white py-1 w-32 mx-auto`}>{pokemon.type}</span>

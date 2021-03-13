@@ -5,7 +5,7 @@ import DamageRelations from '../components/DamageRelations';
 import Loader from '../components/Loader';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
-import SearchType from "../components/SearchType";
+import SearchType from '../components/SearchType';
 
 const pokeTypes = [
   'bug',
@@ -47,27 +47,30 @@ const Types = () => {
     });
   };
 
-  const doType = (newType: string, newName?: string) => {
-    setLoading(true);
+  const getType = (newType: string, newName?: string) => {
     if (!contentRef.current) return;
+    setLoading(true);
 
-    if (newName) {
-      setName(newName);
-    } else {
+    if (!newName) {
       setName('')
+    } else if (newName !== name) {
+      setName(newName);
     }
 
     gsap
       .to(contentRef.current, { opacity: 0, duration: 0.15, ease: 'power2.inOut' })
       .then(() => {
-        buttons.current.forEach((btn) => {
-          if (btn.classList.contains('active')) {
-            btn.classList.remove('active');
-          } else if (btn.innerText.toLowerCase() === newType) {
-            btn.classList.add('active');
-          }
-        });
+        if (newType !== type) {
+          buttons.current.forEach((btn) => {
+            if (btn.classList.contains('active')) {
+              btn.classList.remove('active');
+            } else if (btn.innerText.toLowerCase() === newType) {
+              btn.classList.add('active');
+            }
+          });
+        }
 
+        setType('') // First reset type so same type as before also triggers useEffect
         setType(newType);
       });
   };
@@ -91,7 +94,7 @@ const Types = () => {
   return (
     <div className="grid grid-cols-12 w-full h-full bg-gray-900 text-white">
       <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-28 mb-14 mx-auto w-full">
-        <SearchType doType={doType} />
+        <SearchType getType={getType} />
 
         <p className="mb-2 mx-auto w-full">
           Or select a type:
@@ -101,7 +104,7 @@ const Types = () => {
           {pokeTypes && pokeTypes.map((res, i) => (
             <Button
               key={`type_${i}`}
-              onClick={() => doType(res)}
+              onClick={() => getType(res)}
               variant="contained"
               className={`type-button button capitalize ${res}`}
             >

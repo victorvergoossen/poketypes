@@ -2,11 +2,13 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import { DamageTypes } from '../pages/Types.types';
 
-export const DamageRelations = (props: {
-  variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to',
-  type: string,
-  data: DamageTypes | null
-}) => {
+interface DamageRelationsProps {
+  variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to';
+  type: string;
+  data: DamageTypes | null;
+}
+
+export const DamageRelations = (props: DamageRelationsProps) => {
   const { variant, type, data } = props;
 
   const texts = {
