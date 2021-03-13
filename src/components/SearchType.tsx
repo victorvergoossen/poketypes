@@ -43,7 +43,7 @@ const SearchType = ({ getType }: SearchTypeProps) => {
     getType(type, name);
   };
 
-  const resetInput = () => {
+  const clearInput = () => {
     const inputField = inputRef.current?.querySelector('input');
     if (inputField) {
       inputField.value = '';
@@ -105,7 +105,7 @@ const SearchType = ({ getType }: SearchTypeProps) => {
           />
           <button
             className="absolute top-0 right-0 bottom-0 my-auto ml-auto px-6 focus:outline-none font-dot"
-            onClick={() => resetInput()}
+            onClick={() => clearInput()}
           >
             X
           </button>
