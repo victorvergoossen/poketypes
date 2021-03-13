@@ -6,8 +6,9 @@ import { createMuiTheme } from '@material-ui/core';
 import { PokemonList, Pokemon, SearchTypeProps } from './SearchType.types';
 
 const SearchType = ({ getType }: SearchTypeProps) => {
-  const charactersUntilApiCall = 2;
+  const inputLengthUntilRequest = 2;
 
+  const inputRef = useRef<HTMLDivElement | null>(null);
   const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [data, setData] = useState<any>(null);
   const [showList, setShowList] = useState<boolean>(false);
@@ -42,6 +43,16 @@ const SearchType = ({ getType }: SearchTypeProps) => {
     getType(type, name);
   };
 
+  const resetInput = () => {
+    const inputField = inputRef.current?.querySelector('input');
+    if (inputField) {
+      inputField.value = '';
+      setSearching(false);
+      setShowList(false);
+      setActivePokemon([]);
+    }
+  };
+
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {
     if (!data) return;
     const filterData = (value: string) => {
@@ -70,7 +81,7 @@ const SearchType = ({ getType }: SearchTypeProps) => {
     setSearching(true);
 
     timeOut.current = setTimeout(() => {
-      if (event?.target?.value?.length > charactersUntilApiCall) {
+      if (event?.target?.value?.length > inputLengthUntilRequest) {
         setActivePokemon([]);
         setShowList(true);
         filterData(event.target.value.toLowerCase());
@@ -83,7 +94,22 @@ const SearchType = ({ getType }: SearchTypeProps) => {
   return (
     <div className="absolute left-0 top-0 right-0 max-w-lg mt-8 mx-auto px-4 z-20">
       <MuiThemeProvider theme={theme}>
-        <TextField onChange={onChange} className="w-full" id="outlined-basic" label="Search Pokémon" variant="outlined" />
+        <div className="relative">
+          <TextField
+            ref={inputRef}
+            onChange={onChange}
+            className="w-full"
+            id="outlined-basic"
+            label="Search Pokémon"
+            variant="outlined"
+          />
+          <button
+            className="absolute top-0 right-0 bottom-0 my-auto ml-auto px-6 focus:outline-none font-dot"
+            onClick={() => resetInput()}
+          >
+            X
+          </button>
+        </div>
       </MuiThemeProvider>
 
       {showList && (
@@ -106,8 +132,9 @@ const SearchType = ({ getType }: SearchTypeProps) => {
               key={`pokemon_search_${i}`}
               className={`relative p-4 bg-gray-800 hover:bg-gray-700 transition-colors duration-200 col-span-1 ${isEven(i) ? '' : 'col-start-2'}`}
             >
-              {pokemon.sprite &&
-              <img src={pokemon.sprite} className="h-48 w-48 pb-6 pt-6 mx-auto object-contain" alt={pokemon.name} />}
+              {pokemon.sprite && (
+                <img src={pokemon.sprite} className="h-48 w-48 pb-6 pt-6 mx-auto object-contain" alt={pokemon.name} />
+              )}
 
               <span className="block font-dot absolute right-0 bottom-0 left-0 text-center mb-16 capitalize">{pokemon.name}</span>
               <span className={`block ${pokemon.type} rounded border border-white py-1 w-32 mx-auto`}>{pokemon.type}</span>
