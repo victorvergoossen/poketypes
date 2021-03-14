@@ -14,10 +14,6 @@ class PageRouter extends React.Component {
             path="/"
             component={Types}
           />
-          <Route
-            path="/search"
-            component={SearchType}
-          />
         </Switch>
       </Router>
     );
