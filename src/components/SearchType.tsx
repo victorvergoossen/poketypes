@@ -10,7 +10,7 @@ const SearchType = ({ getType }: SearchTypeProps) => {
 
   const inputRef = useRef<HTMLDivElement | null>(null);
   const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<PokemonList[]>([]);
   const [showList, setShowList] = useState<boolean>(false);
   const [activePokemon, setActivePokemon] = useState<PokemonList[]>([]);
   const [searching, setSearching] = useState<boolean>(false);
@@ -59,7 +59,7 @@ const SearchType = ({ getType }: SearchTypeProps) => {
       if (!value) return;
 
       const promises: PromiseLike<Pokemon>[] = [];
-      const filteredPokemon: PokemonList[] = data
+      const filteredPokemon = data
         ?.filter((filter: { name: string | string[]; }) => filter.name.includes(value));
 
       filteredPokemon.forEach((filtered) => {
