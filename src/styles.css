@@ -138,6 +138,25 @@ html, body {
   animation-delay: -0.5s;
 }
 
+.alert {
+  @apply
+  absolute
+  top-0
+  left-0
+  right-0
+  w-3/4
+  lg:w-1/2
+  mt-4
+  py-4
+  mx-auto
+  text-white
+  bg-gray-700
+  text-center
+  rounded
+  shadow-lg
+  z-50;
+}
+
 @media screen and (max-width: 768px) {
   .button {
     grid-column: span 6 / span 6 !important;

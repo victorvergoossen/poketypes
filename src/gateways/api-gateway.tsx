@@ -1,24 +1,34 @@
 import axios from 'axios';
+import ShowAlert from '../components/Alert';
 import { DamageTypes } from '../pages/Types.types';
 
 export const getPokeTypes = async (type: string) => {
   if (!type) return;
   return await axios
-    .get(`https://pokeapi.co/api/v2/type/${type}/`)
+    .get(`https://pokeapi.co/api/v2/type/${type}/`, { timeout: 10_000 })
     .then((response: DamageTypes) => response)
-    .catch(err => console.error(err));
+    .catch(err => {
+      ShowAlert('There was a problem getting this type info.');
+      console.error(err);
+    });
 };
 
 export const getPokemons = async () => {
   return await axios
-    .get("https://pokeapi.co/api/v2/pokemon?limit=1000")
+    .get("https://pokeapi.co/api/v2/pokemon?limit=1000", { timeout: 10_000 })
     .then((response: any) => response)
-    .catch(err => console.error(err));
+    .catch(err => {
+      ShowAlert('There was a problem reaching the database.');
+      console.error(err);
+    });
 };
 
 export const getPokemon = async (name: string) => {
   return await axios
-    .get(`https://pokeapi.co/api/v2/pokemon/${name}/`)
+    .get(`https://pokeapi.co/api/v2/pokemon/${name}/`, { timeout: 10_000 })
     .then((response: any) => response)
-    .catch(err => console.error(err));
+    .catch(err => {
+      ShowAlert('There was a problem retrieving this Pokémon info.');
+      console.error(err);
+    });
 };
