@@ -7,14 +7,3 @@ export interface DamageTypes {
     };
   };
 }
-
-export interface PokemonDetails {
-  data: {
-    damage_relations: {
-      [key: string]: {
-        name: string;
-      }[];
-    };
-  };
-}
-
