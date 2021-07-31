@@ -1,6 +1,6 @@
 import { TweenLite, Power3 } from 'gsap';
 
-export const ShowAlert = (text: string, duration: number = 4) => {
+const ShowAlert = (text: string, duration: number = 4) => {
   const animateIn = (element: HTMLDivElement) => {
     TweenLite.fromTo(element, {
       y: '-3rem',

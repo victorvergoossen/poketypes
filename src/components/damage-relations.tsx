@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FunctionComponent, memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { DamageTypes } from '../pages/Types.types';
+import { DamageTypes } from '../pages/types.types';
 
 interface DamageRelationsProps {
   variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to';
@@ -8,7 +8,7 @@ interface DamageRelationsProps {
   data: DamageTypes | null;
 }
 
-export const DamageRelations = (props: DamageRelationsProps) => {
+export const DamageRelations: FunctionComponent<DamageRelationsProps> = (props) => {
   const { variant, type, data } = props;
 
   const texts = {
@@ -56,4 +56,4 @@ export const DamageRelations = (props: DamageRelationsProps) => {
   );
 };
 
-export default DamageRelations;
+export default memo(DamageRelations);

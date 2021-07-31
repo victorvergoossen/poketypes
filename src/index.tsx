@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import PageRouter from './PageRouter';
+import Types from './pages/types';
 import './styles.css';
 
 const mountNode = document.getElementById("app");
-ReactDOM.render(<PageRouter />, mountNode);
+ReactDOM.render(<Types />, mountNode);

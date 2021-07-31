@@ -1,11 +1,14 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import Loader from './Loader';
-import { getPokemon, getPokemons } from '../gateways/api-gateway';
+import React, { ChangeEvent, FunctionComponent, memo, useEffect, useRef, useState } from 'react';
+import Loader from '../loader';
+import { getPokemon, getPokemons } from '../../gateways/api-gateway';
 import { debounce, MuiThemeProvider, TextField } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core';
-import { PokemonList, Pokemon, SearchTypeProps } from './SearchType.types';
+import { PokemonList, Pokemon, SearchTypeProps } from './search-type.types';
+import isEven from '../../utils/is-even';
+import clearInput from './functions/clear-input';
+import selectPokemon from './functions/select-pokemon';
 
-const SearchType = ({ getType }: SearchTypeProps) => {
+const SearchType: FunctionComponent<SearchTypeProps> = ({ getType }) => {
   const inputLengthUntilRequest = 2;
 
   const inputRef = useRef<HTMLDivElement | null>(null);
@@ -24,34 +27,12 @@ const SearchType = ({ getType }: SearchTypeProps) => {
     },
   });
 
-  const isEven = (number: number) => number % 2 == 0;
-
   useEffect(() => {
-    const getData = () => {
-      getPokemons()
-        .then((res) => {
-          setData(res?.data?.results);
-        });
-    };
-
-    getData();
+    getPokemons()
+      .then((res) => {
+        setData(res?.data?.results);
+      });
   }, []);
-
-  const selectPokemon = (name: string | undefined, type: string | undefined) => {
-    if (!type) return;
-    setShowList(false);
-    getType(type, name);
-  };
-
-  const clearInput = () => {
-    const inputField = inputRef.current?.querySelector('input');
-    if (inputField) {
-      inputField.value = '';
-      setSearching(false);
-      setShowList(false);
-      setActivePokemon([]);
-    }
-  };
 
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {
     if (!data) return;
@@ -105,7 +86,12 @@ const SearchType = ({ getType }: SearchTypeProps) => {
           />
           <button
             className="absolute top-0 right-0 bottom-0 my-auto ml-auto px-6 focus:outline-none font-dot"
-            onClick={() => clearInput()}
+            onClick={() => clearInput({
+              inputRef,
+              setActivePokemon,
+              setSearching,
+              setShowList,
+            })}
           >
             X
           </button>
@@ -128,7 +114,11 @@ const SearchType = ({ getType }: SearchTypeProps) => {
 
           {activePokemon.map((pokemon: PokemonList, i: number) => (
             <button
-              onClick={() => selectPokemon(pokemon.name, pokemon.type)}
+              onClick={() => selectPokemon({
+                getType,
+                pokemon, 
+                setShowList,
+              })}
               key={`pokemon_search_${i}`}
               className={`relative p-4 bg-gray-800 hover:bg-gray-700 transition-colors duration-200 col-span-1 ${isEven(i) ? '' : 'col-start-2'}`}
             >
@@ -146,4 +136,4 @@ const SearchType = ({ getType }: SearchTypeProps) => {
   );
 };
 
-export default SearchType;
+export default memo(SearchType);

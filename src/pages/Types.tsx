@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getPokeTypes } from '../gateways/api-gateway';
-import { DamageTypes } from './Types.types';
-import DamageRelations from '../components/DamageRelations';
-import Loader from '../components/Loader';
+import { DamageTypes } from './types.types';
+import DamageRelations from '../components/damage-relations';
+import Loader from '../components/loader';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
-import SearchType from '../components/SearchType';
+import SearchType from '../components/search-type/search-type';
 
 const pokeTypes = [
   'bug',
