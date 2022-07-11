@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { getPokeTypes } from '../gateways/api-gateway';
-import { DamageTypes } from './types.types';
 import DamageRelations from '../components/damage-relations';
-import Loader from '../components/loader';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
 import SearchType from '../components/search-type/search-type';
+import Loader from '../components/Loader';
+import { DamageTypes } from './Types.types';
 
 const pokeTypes = [
   'bug',
@@ -29,9 +29,9 @@ const pokeTypes = [
 ];
 
 const Types = () => {
-  const [loading, setLoading] = useState(false);
-  const [type, setType] = useState('');
-  const [name, setName] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [type, setType] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const [data, setData] = useState<DamageTypes | null>(null);
   const buttons = useRef<HTMLButtonElement[]>([]);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -57,9 +57,11 @@ const Types = () => {
       setName(newName);
     }
 
-    gsap
-      .to(contentRef.current, { opacity: 0, duration: 0.15, ease: 'power2.inOut' })
-      .then(() => {
+    gsap.to(contentRef.current, {
+      opacity: 0,
+      duration: 0.15,
+      ease: 'power2.inOut',
+      onComplete: () => {
         if (newType !== type) {
           buttons.current.forEach((btn) => {
             if (btn.classList.contains('active')) {
@@ -70,20 +72,25 @@ const Types = () => {
           });
         }
 
-        setType('') // First reset type so same type as before also triggers useEffect
+        // First reset type if new type is the same type as before, 
+        // it also triggers useEffect
+        setType('')
         setType(newType);
-      });
+      }
+    })
   };
 
   useEffect(() => {
-    getPokeTypes(type)
-      .then((res) => {
-        if (typeof res === 'undefined') return;
+    const loadTypes = async () => {
+      const types = await getPokeTypes(type);
+      if (typeof types === 'undefined') return;
 
-        setData(res);
-        setLoading(false);
-        animateIn();
-      })
+      setData(types);
+      setLoading(false);
+      animateIn();
+    };
+
+    loadTypes();
   }, [type]);
 
   useEffect(() => {
@@ -115,35 +122,35 @@ const Types = () => {
       </div>
 
       <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-4 mt-12 mb-12 mx-auto w-full">
-          {loading
-            ? <Loader />
-            : (
-              <div id="anchor" ref={contentRef} className="opacity-0">
-                {type && (
-                  <>
-                    {name && (
-                      <h2 className="font-dot text-xl text-center mb-6">
-                        Selected Pokémon: <strong className="uppercase">{name}</strong>
-                      </h2>
-                    )}
-                    <Box className={`w-auto capitalize bg-gray-800 pt-3 pb-4 rounded max-w-sm font-dot mx-auto border-4 border-white ${type}`}>
-                      <h1 className="text-3xl font-bold text-center">
-                        {type}
-                      </h1>
-                    </Box>
+        {loading
+          ? <Loader />
+          : (
+            <div id="anchor" ref={contentRef} className="opacity-0">
+              {type && (
+                <>
+                  {name && (
+                    <h2 className="font-dot text-xl text-center mb-6">
+                      Selected Pokémon: <strong className="uppercase">{name}</strong>
+                    </h2>
+                  )}
+                  <Box className={`w-auto capitalize bg-gray-800 pt-3 pb-4 rounded max-w-sm font-dot mx-auto border-4 border-white ${type}`}>
+                    <h1 className="text-3xl font-bold text-center">
+                      {type}
+                    </h1>
+                  </Box>
 
-                    <div className="grid grid-cols-8 gap-4 mt-8">
-                      <DamageRelations variant="double_damage_from" type={type} data={data} />
-                      <DamageRelations variant="double_damage_to" type={type} data={data} />
-                      <DamageRelations variant="half_damage_from" type={type} data={data} />
-                      <DamageRelations variant="half_damage_to" type={type} data={data} />
-                    </div>
-                  </>
-                )}
+                  <div className="grid grid-cols-8 gap-4 mt-8">
+                    <DamageRelations variant="double_damage_from" type={type} data={data} />
+                    <DamageRelations variant="double_damage_to" type={type} data={data} />
+                    <DamageRelations variant="half_damage_from" type={type} data={data} />
+                    <DamageRelations variant="half_damage_to" type={type} data={data} />
+                  </div>
+                </>
+              )}
             </div>
-            )
-          }
-        </div>
+          )
+        }
+      </div>
     </div>
   );
 };
