@@ -5,7 +5,7 @@ import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
 import SearchType from '../components/search-type/search-type';
 import Loader from '../components/loader';
-import { DamageTypes } from './types.types';
+import { DamageTypes } from './Types.types';
 
 const pokeTypes: string[] = [
   'bug',

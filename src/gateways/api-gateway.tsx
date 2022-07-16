@@ -1,6 +1,6 @@
 import axios from 'axios';
-import ShowAlert from '../components/Alert';
-import { DamageTypes } from '../pages/Types.types';
+import ShowAlert from '../components/alert';
+import { DamageTypes } from '../pages/types.types';
 
 const getTimeout = 10_000;
 

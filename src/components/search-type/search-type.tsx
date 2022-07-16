@@ -116,7 +116,7 @@ const SearchType: FunctionComponent<SearchTypeProps> = ({ getType }) => {
             <button
               onClick={() => selectPokemon({
                 getType,
-                pokemon, 
+                pokemon,
                 setShowList,
               })}
               key={`pokemon_search_${i}`}

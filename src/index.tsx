@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import Types from './pages/Types';
+import Types from './pages/types';
 import './styles.css';
 
 const mountNode = document.getElementById("app");
