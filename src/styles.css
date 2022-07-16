@@ -44,75 +44,57 @@ html, body {
 
 /* Types styling */
 .bug {
-  text-transform: uppercase;
   background-color: #a3c11d !important;
 }
 .dark {
-  text-transform: uppercase;
   background-color: #2c3141 !important;
 }
 .dragon {
-  text-transform: uppercase;
   background-color: #26455a !important;
 }
 .electric {
-  text-transform: uppercase;
   background-color: #e0ad14 !important;
 }
 .fairy {
-  text-transform: uppercase;
   background-color: #ff99d5 !important;
 }
 .fighting {
-  text-transform: uppercase;
   background-color: #a28675 !important;
 }
 .fire {
-  text-transform: uppercase;
   background-color: #c43828 !important;
 }
 .flying {
-  text-transform: uppercase;
   background-color: #b457f6 !important;
 }
 .ghost {
-  text-transform: uppercase;
   background-color: #45285a !important;
 }
 .grass {
-  text-transform: uppercase;
   background-color: #59ab20 !important;
 }
 .ground {
-    text-transform: uppercase;
   background-color: #cf9d75 !important;
 }
 .ice {
-  text-transform: uppercase;
   background-color: #7edbde !important;
 }
 .normal {
-  text-transform: uppercase;
   background-color: #a4a490 !important;
 }
 .poison {
-  text-transform: uppercase;
   background-color: #65288a !important;
 }
 .psychic {
-  text-transform: uppercase;
   background-color: #d425cf !important;
 }
 .rock {
-  text-transform: uppercase;
   background-color: #8d571d !important;
 }
 .steel {
-    text-transform: uppercase;
   background-color: #a4a4a4 !important;
 }
 .water {
-  text-transform: uppercase;
   background-color: #2a78c6 !important;
 }
 

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FunctionComponent, memo, useEffect, useRef, useState } from 'react';
-import Loader from '../loader';
+import Loader from '../loader-spinner';
 import { getPokemon, getPokemons } from '../../gateways/api-gateway';
 import { debounce, MuiThemeProvider, TextField } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core';
@@ -36,6 +36,7 @@ const SearchType: FunctionComponent<SearchTypeProps> = ({ getType }) => {
 
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {
     if (!data) return;
+
     const filterData = (value: string) => {
       if (!value) return;
 

@@ -4,8 +4,8 @@ import DamageRelations from '../components/damage-relations';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
 import SearchType from '../components/search-type/search-type';
-import Loader from '../components/loader';
-import { DamageTypes } from './types.types';
+import Loader from '../components/loader-spinner';
+import { DamageTypes } from './poke-types.types';
 
 const pokeTypes: string[] = [
   'bug',
@@ -134,7 +134,7 @@ const Types = () => {
                     </h2>
                   )}
                   <Box className={`w-auto capitalize bg-gray-800 pt-3 pb-4 rounded max-w-sm font-dot mx-auto border-4 border-white ${type}`}>
-                    <h1 className="text-3xl font-bold text-center">
+                    <h1 className="text-3xl font-bold text-center uppercase">
                       {type}
                     </h1>
                   </Box>

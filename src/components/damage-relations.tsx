@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { DamageTypes } from '../pages/Types.types';
+import { DamageTypes } from '../pages/poke-types.types';
 
 interface DamageRelationsProps {
   variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to';
@@ -37,7 +37,7 @@ export const DamageRelations: FunctionComponent<DamageRelationsProps> = (props) 
               <li
                 key={`half_damage_from_${i}`}
                 className={`block text-center text-sm w-full px-4 py-1 my-1 
-                font-dot text-white rounded text-sm shadow-lg ${res.name}`}
+                font-dot text-white rounded text-sm shadow-lg uppercase ${res.name}`}
               >
                 {res.name}
               </li>
