@@ -1,6 +1,6 @@
 import React, { FunctionComponent, memo } from 'react';
 import Box from '@material-ui/core/Box';
-import { DamageTypes } from '../pages/types.types';
+import { DamageTypes } from '../pages/Types.types';
 
 interface DamageRelationsProps {
   variant: 'double_damage_from' | 'double_damage_to' | 'half_damage_from' | 'half_damage_to';
