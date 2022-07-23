@@ -32,6 +32,11 @@ const SearchType: FunctionComponent<SearchTypeProps> = ({ getType }) => {
       .then((res) => {
         setData(res?.data?.results);
       });
+
+    return () => {
+      // Clear any timeouts in case they are running during unmount
+      if (timeOut.current) clearTimeout(timeOut.current);
+    }
   }, []);
 
   const onChange = debounce((event: ChangeEvent & { target: { value: string } }) => {

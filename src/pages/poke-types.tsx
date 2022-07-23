@@ -7,7 +7,7 @@ import SearchType from '../components/search-type/search-type';
 import Loader from '../components/loader-spinner';
 import { DamageTypes } from './poke-types.types';
 
-const pokeTypes: string[] = [
+const POKE_TYPES: string[] = [
   'bug',
   'dark',
   'dragon',
@@ -108,7 +108,7 @@ const Types = () => {
         </p>
 
         <div className="grid grid-cols-12 lg:gap-x-8 gap-x-2 gap-y-2">
-          {pokeTypes && pokeTypes.map((res, i) => (
+          {POKE_TYPES.map((res, i) => (
             <Button
               key={`type_${i}`}
               onClick={() => getType(res)}

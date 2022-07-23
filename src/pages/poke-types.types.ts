@@ -1,3 +1,4 @@
+// Modeled after api data
 export interface DamageTypes {
   data: {
     damage_relations: {

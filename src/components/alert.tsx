@@ -21,7 +21,6 @@ const animateOut = (element: HTMLDivElement) => {
 };
 
 const ShowAlert = (text: string, duration: number = 4) => {
-
   const newAlert = document.createElement('div');
   newAlert.classList.add('alert');
   newAlert.innerText = text;
@@ -30,7 +29,7 @@ const ShowAlert = (text: string, duration: number = 4) => {
   animateIn(newAlert);
 
   setTimeout(() => {
-    animateOut(newAlert)
+    animateOut(newAlert);
   }, duration * 1000);
 };
 

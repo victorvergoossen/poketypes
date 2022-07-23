@@ -6,9 +6,7 @@ interface SelectPokemonProps {
   setShowList: (value: boolean) => void;
 }
 
-const selectPokemon = ({
-  getType, pokemon, setShowList,
-}: SelectPokemonProps) => {
+const selectPokemon = ({ getType, pokemon, setShowList }: SelectPokemonProps) => {
   if (!pokemon?.type) return;
 
   setShowList(false);
