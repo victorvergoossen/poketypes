@@ -34,3 +34,33 @@ export const getPokemon = async (name: string) => {
       console.error(err);
     });
 };
+
+export const getPokemonSpecies = async (name: string) => {
+  return await axios
+    .get(`https://pokeapi.co/api/v2/pokemon-species/${name}/`, { timeout: getTimeout })
+    .then((response: any) => response)
+    .catch((err: Error) => {
+      ShowAlert('There was a problem retrieving this Pokémon info.');
+      console.error(err);
+    });
+};
+
+export const getEvolution = async (id: number) => {
+  return await axios
+    .get(`https://pokeapi.co/api/v2/evolution-chain/${id}/`, { timeout: getTimeout })
+    .then((response: any) => response)
+    .catch((err: Error) => {
+      ShowAlert("There was a problem retrieving this Pokémon's evolution.");
+      console.error(err);
+    });
+};
+
+export const getEvolutionTrigger = async (chainId: number) => {
+  return await axios
+    .get(`https://pokeapi.co/api/v2/evolution-trigger/${chainId}/`, { timeout: getTimeout })
+    .then((response: any) => response)
+    .catch((err: Error) => {
+      ShowAlert("There was a problem retrieving this Pokémon's evolution.");
+      console.error(err);
+    });
+};
