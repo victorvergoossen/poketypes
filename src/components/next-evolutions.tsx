@@ -92,10 +92,11 @@ export const NextEvolutions = ({
               </div>
 
               {index !== nextEvolutions.length - 1 && (
-                <div className="relative flex justify-center items-center rounded-full bg-gray-200 -ml-2 w-9 h-8 mt-8">
+                <div className="relative flex justify-center items-center rounded-full bg-gray-200 -ml-2 w-8 h-8 mt-10">
                   <span
                     onClick={() => setOpenDialog((prev) => !prev)}
-                    className="absolute inset-0 m-auto font-bold text-black text-center h-8 w-8 flex justify-center items-center">
+                    className="absolute inset-0 m-auto font-bold text-black text-center h-8 w-8 flex justify-center items-center"
+                  >
                     {evoLevelData[index] || '-'}
                   </span>
 
