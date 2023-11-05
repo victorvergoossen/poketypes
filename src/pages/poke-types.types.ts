@@ -6,5 +6,12 @@ export interface DamageTypes {
         name: string;
       }[];
     };
+    pokemon?: {
+      pokemon: {
+        name: string;
+        url: string;
+      }[];
+      slot: number;
+    }[];
   };
 }

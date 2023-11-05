@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import SearchType from '../components/search-type/search-type';
 import Loader from '../components/loader-spinner';
 import { DamageTypes } from './poke-types.types';
+import { NextEvolutions } from '../components/next-evolutions';
 
 const POKE_TYPES: string[] = [
   'bug',
@@ -98,6 +99,7 @@ const Types = () => {
       ?.forEach(btn => buttons.current.push(btn));
   }, []);
 
+
   return (
     <div className="grid grid-cols-12 w-full h-full bg-gray-900 text-white">
       <div className="max-w-screen-xl lg:col-span-8 col-span-12 lg:col-start-3 col-start-1 px-4 pt-28 mb-14 mx-auto w-full">
@@ -129,7 +131,7 @@ const Types = () => {
               {type && (
                 <>
                   {name && (
-                    <h2 className="font-dot text-xl text-center mb-6">
+                    <h2 className="font-dot text-xl text-center mb-5">
                       Selected Pokémon: <strong className="uppercase">{name}</strong>
                     </h2>
                   )}
@@ -139,7 +141,9 @@ const Types = () => {
                     </h1>
                   </Box>
 
-                  <div className="grid grid-cols-8 gap-4 mt-8">
+                  <NextEvolutions name={name} data={data} />
+
+                  <div className="grid grid-cols-8 gap-4">
                     <DamageRelations variant="double_damage_from" type={type} data={data} />
                     <DamageRelations variant="double_damage_to" type={type} data={data} />
                     <DamageRelations variant="half_damage_from" type={type} data={data} />
