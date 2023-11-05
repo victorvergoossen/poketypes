@@ -9,7 +9,7 @@ import clearInput from './functions/clear-input';
 import selectPokemon from './functions/select-pokemon';
 
 const SearchType: FunctionComponent<SearchTypeProps> = ({ getType }) => {
-  const inputLengthUntilRequest = 2;
+  const inputLengthUntilRequest = 1;
 
   const inputRef = useRef<HTMLDivElement | null>(null);
   const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null);
