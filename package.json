@@ -9,7 +9,7 @@
     "clean": "rm dist/bundle.js",
     "build-dev": "webpack --mode development",
     "build-prod": "webpack --mode production",
-    "start": "webpack serve --mode development"
+    "start": "node check-files.js && webpack serve --mode development"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
