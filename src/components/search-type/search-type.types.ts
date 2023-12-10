@@ -9,12 +9,17 @@ export type PokemonList = {
   type?: string;
 }
 
+// Modeled after api data
 export type Pokemon = {
   data: {
     sprites: {
       'front_default': string;
     };
-    types: any;
+    types: {
+      type: {
+        name: string;
+      };
+    }[];
   }
 }
 

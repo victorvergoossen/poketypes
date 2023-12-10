@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import { getPokemonSpecies } from "../../../gateways/api-gateway";
 import axios from "axios";
 import { DamageTypes } from "../../../pages/poke-types.types";
+import { TEvolutionData } from "../next-evolutions.types";
 
 interface IUseGetSelectedEvolution {
   name: string;
   data: DamageTypes | null;
 }
 
-export const useGetSelectedEvolution = ({
+export const useGetSelectedEvolution = <EvoData extends unknown = unknown>({
   name,
   data,
 }: IUseGetSelectedEvolution) => {
-  const [evolutionData, setEvolutionData] = useState<any>(null);
+  const [evolutionData, setEvolutionData] = useState<TEvolutionData<EvoData> | null>(null);
 
   useEffect(() => {
     // Get evolution data

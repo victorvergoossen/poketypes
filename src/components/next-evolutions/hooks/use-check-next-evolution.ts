@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import { TEvolutionData } from "../next-evolutions.types";
 
-interface IUseCheckNextEvolution {
-  evolutionData: any;
+interface IUseCheckNextEvolution<EvoData> {
+  evolutionData: TEvolutionData<EvoData> | null
 }
 
-export const useCheckNextEvolution = ({
+export const useCheckNextEvolution = <EvoData extends unknown = unknown>({
   evolutionData,
-}: IUseCheckNextEvolution) => {
+}: IUseCheckNextEvolution<EvoData>) => {
   const [nextEvolutions, setNextEvolutions] = useState<any[]>([]);
   const [evoLevelData, setEvoLevelData] = useState<string[]>([]);
   const [evoTrigger, setEvoTrigger] = useState<string[]>([]);
@@ -14,9 +15,9 @@ export const useCheckNextEvolution = ({
   useEffect(() => {
     let evoLevel: string[] = [];
     let evoTrigger: string[] = [];
-    let species: any = [];
+    let species: EvoData[] = [];
 
-    const checkNextEvolution = async (evolutionChain: any) => {
+    const checkNextEvolution = async (evolutionChain: TEvolutionData<EvoData>["chain"]) => {
       const nextSpecies = evolutionChain?.evolves_to?.[0]?.species;
       const nextEvoLevel = evolutionChain?.evolves_to?.[0]?.evolution_details?.[0]?.min_level;
       const nextEvoTrigger = evolutionChain?.evolves_to?.[0]?.evolution_details?.[0]?.trigger?.name;
@@ -32,7 +33,7 @@ export const useCheckNextEvolution = ({
         setEvoTrigger(evoTrigger);
       }
 
-      checkNextEvolution(evolutionChain?.evolves_to?.[0]);
+      checkNextEvolution(evolutionChain?.evolves_to?.[0] as unknown as TEvolutionData<EvoData>["chain"]);
     };
 
     if (evolutionData) {

@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { getPokemon } from "../../../gateways/api-gateway";
+import { TNextEvolutions } from "../next-evolutions.types";
 
 interface IUseGetPokemonSprites {
-  nextEvolutions: any[]
+  nextEvolutions: TNextEvolutions
 }
 
 export const useGetPokemonSprites = ({
   nextEvolutions,
 }: IUseGetPokemonSprites) => {
-  const [spriteData, setSpriteData] = useState<any[]>([]);
+  const [spriteData, setSpriteData] = useState<string[]>([]);
 
   useEffect(() => {
-    // Generate sprites
     const getPokemonSprites = async (pName: string) => {
       const { data: pokemonData } = await getPokemon(pName);
       return pokemonData;
     };
 
-    const spritePromises = nextEvolutions.map(async (species: any) => getPokemonSprites(species.name));
+    const spritePromises = nextEvolutions.map(async (species) => getPokemonSprites(species.name));
     spritePromises && spritePromises.length > 0 && Promise.all(spritePromises)?.then(res => {
       const sprites = res.map(r => r.sprites?.front_default);
       setSpriteData(sprites);

@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { getPokeTypes } from '../gateways/api-gateway';
+import React, { useRef, useState } from 'react';
 import DamageRelations from '../components/damage-relations';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';

@@ -5,24 +5,26 @@ import { DamageTypes } from '../../pages/poke-types.types';
 import { useGetSelectedEvolution } from './hooks/use-get-selected-evolution';
 import { useCheckNextEvolution } from './hooks/use-check-next-evolution';
 import { useGetPokemonSprites } from './hooks/use-get-pokemon-sprites';
+import { TEvolutionData } from './next-evolutions.types';
 
 interface INextEvolutions {
   name: string,
   data: DamageTypes | null,
 }
 
-export const NextEvolutions = ({
+export const NextEvolutions = <EvoData extends unknown = unknown>({
   name,
   data
 }: INextEvolutions): JSX.Element | null => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const { evolutionData } = useGetSelectedEvolution({ name, data });
+  const { evolutionData } = useGetSelectedEvolution<EvoData>({ name, data });
 
-  const { evoLevelData, evoTrigger, nextEvolutions } = useCheckNextEvolution({
+  const { evoLevelData, evoTrigger, nextEvolutions } = useCheckNextEvolution<EvoData>({
     evolutionData,
   });
   const { spriteData } = useGetPokemonSprites({ nextEvolutions });
+  console.log(spriteData)
 
   if (nextEvolutions?.length <= 0 || spriteData?.length <= 0) {
     return null;
@@ -34,7 +36,7 @@ export const NextEvolutions = ({
       <div className="relative w-full mt-4 mb-12">
         <div className="w-full justify-between flex flex-row">
 
-          {nextEvolutions?.map((species: any, index: number) => {
+          {nextEvolutions?.map((species, index) => {
             const gifImgUrl = `/sprites/${formatName(species.name)}.gif`;
             return (
               <React.Fragment key={`evo_${species.name}`}>
