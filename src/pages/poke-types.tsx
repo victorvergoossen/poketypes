@@ -1,52 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { getPokeTypes } from '../gateways/api-gateway';
+import React, { useRef, useState } from 'react';
 import DamageRelations from '../components/damage-relations';
 import { Box, Button } from '@material-ui/core';
 import gsap from 'gsap';
 import SearchType from '../components/search-type/search-type';
 import Loader from '../components/loader-spinner';
 import { DamageTypes } from './poke-types.types';
-import { NextEvolutions } from '../components/next-evolutions';
-
-const POKE_TYPES: string[] = [
-  'bug',
-  'dark',
-  'dragon',
-  'electric',
-  'fairy',
-  'fighting',
-  'fire',
-  'flying',
-  'ghost',
-  'grass',
-  'ground',
-  'ice',
-  'normal',
-  'poison',
-  'psychic',
-  'rock',
-  'steel',
-  'water',
-];
+import { NextEvolutions } from '../components/next-evolutions/next-evolutions';
+import { POKE_TYPES } from '../constants';
+import { useLoadTypes } from '../hooks/use-load-types';
 
 const Types = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [type, setType] = useState<string>('');
   const [name, setName] = useState<string>('');
   const [data, setData] = useState<DamageTypes | null>(null);
   const buttons = useRef<HTMLButtonElement[]>([]);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
-  const animateIn = () => {
-    if (!contentRef.current) return;
-    contentRef.current.scrollIntoView({ behavior: 'smooth' })
-
-    gsap.fromTo(contentRef.current, {
-      opacity: 0, y: '2rem'
-    }, {
-      opacity: 1, y: 0, duration: 0.3, delay: 0.05, ease: 'power2.inOut'
-    });
-  };
+  const { loading, setLoading } = useLoadTypes({
+    type,
+    contentRef,
+    buttons,
+    setData,
+  });
 
   const getType = (newType: string, newName?: string) => {
     if (!contentRef.current) return;
@@ -80,25 +55,6 @@ const Types = () => {
       }
     })
   };
-
-  useEffect(() => {
-    const loadTypes = async () => {
-      const types = await getPokeTypes(type);
-      if (typeof types === 'undefined') return;
-
-      setData(types);
-      setLoading(false);
-      animateIn();
-    };
-
-    loadTypes();
-  }, [type]);
-
-  useEffect(() => {
-    document.querySelectorAll<HTMLButtonElement>('.type-button')
-      ?.forEach(btn => buttons.current.push(btn));
-  }, []);
-
 
   return (
     <div className="grid grid-cols-12 w-full h-full bg-gray-900 text-white">

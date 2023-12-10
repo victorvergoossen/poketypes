@@ -8,19 +8,21 @@ interface ClearInputProps {
   setActivePokemon: (value: PokemonList[]) => void;
 }
 
-const clearInput = ({ 
-  inputRef, 
-  setSearching, 
-  setShowList, 
-  setActivePokemon 
+const clearInput = ({
+  inputRef,
+  setSearching,
+  setShowList,
+  setActivePokemon
 }: ClearInputProps) => {
   const inputField = inputRef.current?.querySelector('input');
-  if (inputField) {
-    inputField.value = '';
-    setSearching(false);
-    setShowList(false);
-    setActivePokemon([]);
+  if (!inputField) {
+    return;
   }
+
+  inputField.value = '';
+  setSearching(false);
+  setShowList(false);
+  setActivePokemon([]);
 };
 
 export default clearInput;
